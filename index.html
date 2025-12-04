@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>金矿项目 ROI 仪表盘（示例版）</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      padding: 16px;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+    header h1 {
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+    header p {
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    .cards-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .card {
+      background: #020617;
+      border-radius: 14px;
+      padding: 12px 14px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      flex: 1 1 220px;
+      min-width: 0;
+    }
+
+    .card-title {
+      font-size: 13px;
+      color: #9ca3af;
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-value {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .card-sub {
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      background: rgba(56, 189, 248, 0.12);
+      color: #38bdf8;
+    }
+
+    .line-card {
+      background: #020617;
+      border-radius: 14px;
+      padding: 10px 12px;
+      border: 1px solid rgba(75, 85, 99, 0.8);
+    }
+    .line-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+    .line-name {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .line-location {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+    .line-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12px;
+      color: #d1d5db;
+    }
+    .line-metrics span {
+      display: inline-block;
+    }
+
+    .section-title {
+      margin: 18px 0 8px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .table-wrapper {
+      background: #020617;
+      border-radius: 14px;
+      border: 1px solid rgba(75, 85, 99, 0.8);
+      padding: 8px 8px 12px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      min-width: 680px;
+    }
+    th, td {
+      padding: 6px 8px;
+      text-align: right;
+      border-bottom: 1px solid #1f2937;
+      white-space: nowrap;
+    }
+    th {
+      color: #9ca3af;
+      font-weight: 500;
+      background: #020617;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    th:first-child, td:first-child {
+      text-align: left;
+    }
+    tr:nth-child(even) td {
+      background: rgba(15, 23, 42, 0.7);
+    }
+
+    .pill-profit-pos {
+      color: #4ade80;
+      font-weight: 600;
+    }
+    .pill-profit-neg {
+      color: #f97373;
+      font-weight: 600;
+    }
+
+    .small-text {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 6px;
+    }
+
+    .error {
+      margin-top: 12px;
+      font-size: 13px;
+      color: #fecaca;
+    }
+
+    @media (max-width: 700px) {
+      body { padding: 12px; }
+      header h1 { font-size: 18px; }
+      .card { flex: 1 1 100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>金矿项目 ROI 仪表盘（示例）</h1>
+    <p>从 Google Sheets 自动汇总 · 每条洗矿线的收入、成本与利润一目了然</p>
+  </header>
+
+  <!-- 全局汇总卡片 -->
+  <div class="cards-row" id="global-cards">
+    <div class="card">
+      <div class="card-title">
+        <span>总收入（USD）</span>
+        <span class="badge">全部洗矿线</span>
+      </div>
+      <div class="card-value" id="total-revenue">–</div>
+      <div class="card-sub">来自所有记录的合计销售收入</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <span>总成本（USD）</span>
+      </div>
+      <div class="card-value" id="total-cost">–</div>
+      <div class="card-sub">柴油 + 人工 + 其他成本合计</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <span>总利润（USD）</span>
+      </div>
+      <div class="card-value" id="total-profit">–</div>
+      <div class="card-sub">所有记录的收入减成本</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <span>平均利润率</span>
+      </div>
+      <div class="card-value" id="avg-margin">–</div>
+      <div class="card-sub">按（总利润 / 总收入）粗略计算</div>
+    </div>
+  </div>
+
+  <!-- 每条洗矿线 ROI 卡片 -->
+  <h2 class="section-title">各洗矿线汇总（线级 ROI 概览）</h2>
+  <div class="cards-row" id="lines-row">
+    <!-- JS 动态插入 -->
+  </div>
+
+  <!-- 明细表 -->
+  <h2 class="section-title">每日明细记录</h2>
+  <div class="table-wrapper">
+    <table id="detail-table">
+      <thead>
+      <tr>
+        <th>日期</th>
+        <th>产线</th>
+        <th>地点</th>
+        <th>移动方量 m³</th>
+        <th>产金 g</th>
+        <th>品位 g/m³</th>
+        <th>收入 USD</th>
+        <th>成本 USD</th>
+        <th>利润 USD</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-- JS 动态插入 -->
+      </tbody>
+    </table>
+    <div class="small-text">
+      提示：实际生产中可按天、按班次或按堆料批次记录；只要录入 Google Sheet，系统即可自动汇总。
+    </div>
+  </div>
+
+  <div id="error-box" class="error" style="display:none;"></div>
+</div>
+
+<script>
+  async function loadData() {
+    try {
+      const res = await fetch('data.json?_=' + Date.now());
+      if (!res.ok) throw new Error('无法读取 data.json，状态码: ' + res.status);
+      const data = await res.json();
+      renderDashboard(data);
+    } catch (err) {
+      console.error(err);
+      const box = document.getElementById('error-box');
+      box.style.display = 'block';
+      box.textContent = '数据加载失败，请确认 data.json 已生成并与本页面在同一目录。错误信息：' + err.message;
+    }
+  }
+
+  function toNumber(x) {
+    if (x === null || x === undefined) return 0;
+    const s = String(x).replace(/,/g, '').trim();
+    const v = parseFloat(s);
+    return isNaN(v) ? 0 : v;
+  }
+
+  function formatMoney(v) {
+    return v.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  }
+
+  function formatMoney2(v) {
+    return v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function renderDashboard(data) {
+    const lines = data.lines || [];
+
+    let totalRevenue = 0;
+    let totalCost = 0;
+    let totalProfit = 0;
+
+    const tbody = document.querySelector('#detail-table tbody');
+    tbody.innerHTML = '';
+
+    // 用于 per-line 汇总
+    const perLine = {}; // line_id -> { name, location, revenue, cost, profit, gold_grams }
+
+    lines.forEach(line => {
+      const lineId = line.line_id || '未知';
+      const lineName = line.line_name || lineId;
+      const location = line.location || '';
+
+      if (!perLine[lineId]) {
+        perLine[lineId] = {
+          lineId,
+          lineName,
+          location,
+          revenue: 0,
+          cost: 0,
+          profit: 0,
+          goldGrams: 0
+        };
+      }
+
+      (line.records || []).forEach(rec => {
+        const date = rec.date || '';
+        const m3 = toNumber(rec.material_moved_m3);
+        const grams = toNumber(rec.gold_grams);
+        const grade = toNumber(rec.avg_grade_g_per_m3);
+        const revenue = toNumber(rec.revenue_usd);
+        const cost = toNumber(rec.total_cost_usd);
+        const profit = toNumber(rec.profit_usd);
+
+        totalRevenue += revenue;
+        totalCost += cost;
+        totalProfit += profit;
+
+        perLine[lineId].revenue += revenue;
+        perLine[lineId].cost += cost;
+        perLine[lineId].profit += profit;
+        perLine[lineId].goldGrams += grams;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${date}</td>
+          <td>${lineName}</td>
+          <td>${location}</td>
+          <td>${m3 ? m3.toFixed(0) : ''}</td>
+          <td>${grams ? grams.toFixed(1) : ''}</td>
+          <td>${grade ? grade.toFixed(2) : ''}</td>
+          <td>${revenue ? formatMoney2(revenue) : ''}</td>
+          <td>${cost ? formatMoney2(cost) : ''}</td>
+          <td class="${profit >= 0 ? 'pill-profit-pos' : 'pill-profit-neg'}">
+            ${profit ? formatMoney2(profit) : ''}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    });
+
+    // 全局卡片
+    document.getElementById('total-revenue').textContent = totalRevenue ? '$ ' + formatMoney(totalRevenue) : '–';
+    document.getElementById('total-cost').textContent    = totalCost ? '$ ' + formatMoney(totalCost) : '–';
+    document.getElementById('total-profit').textContent  = totalProfit ? '$ ' + formatMoney(totalProfit) : '–';
+
+    const avgMargin = totalRevenue > 0 ? (totalProfit / totalRevenue) * 100 : 0;
+    document.getElementById('avg-margin').textContent =
+      totalRevenue > 0 ? avgMargin.toFixed(1) + '%' : '–';
+
+    // 每条线卡片
+    const linesRow = document.getElementById('lines-row');
+    linesRow.innerHTML = '';
+    Object.values(perLine).forEach(lineInfo => {
+      const margin = lineInfo.revenue > 0 ? (lineInfo.profit / lineInfo.revenue) * 100 : 0;
+      const card = document.createElement('div');
+      card.className = 'line-card';
+      card.innerHTML = `
+        <div class="line-card-header">
+          <div>
+            <div class="line-name">${lineInfo.lineName}</div>
+            <div class="line-location">${lineInfo.location || ''}</div>
+          </div>
+          <div style="text-align:right;font-size:12px;">
+            <div>累计利润</div>
+            <div class="${lineInfo.profit >= 0 ? 'pill-profit-pos' : 'pill-profit-neg'}">
+              $ ${formatMoney(lineInfo.profit)}
+            </div>
+          </div>
+        </div>
+        <div class="line-metrics">
+          <span>累计收入：$ ${formatMoney(lineInfo.revenue)}</span>
+          <span>累计成本：$ ${formatMoney(lineInfo.cost)}</span>
+          <span>累计产金：${lineInfo.goldGrams.toFixed(1)} g</span>
+          <span>线级利润率：${lineInfo.revenue > 0 ? margin.toFixed(1) + '%' : '-'}</span>
+        </div>
+      `;
+      linesRow.appendChild(card);
+    });
+  }
+
+  loadData();
+</script>
+</body>
+</html>
