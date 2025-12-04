@@ -1,39 +1,126 @@
 {
-  "config": {
-    "project_name": "Creek A – Line 1",
-    "currency": "USD",
-    "investment": 100000
-  },
-  "summary": {
-    "total_gross": 186000,
-    "total_net": 142000,
-    "profit": 42000,
-    "roi_profit_based": 0.42,
-    "first_sale_date": "2025-02-01",
-    "last_sale_date": "2025-05-18"
-  },
-  "sales": [
+  "lines": [
     {
-      "date": "2025-02-01",
-      "grams": 320,
-      "price_per_gram": 66,
-      "gross": 21120,
-      "fee": 100,
-      "other_cost": 0,
-      "net": 21020,
-      "buyer": "Buyer A",
-      "note": ""
+      "line_id": "L1",
+      "line_name": "River-Creek 1",
+      "location": "Creek A",
+      "records": [
+        {
+          "date": "2025-01-05",
+          "line_id": "L1",
+          "line_name": "River-Creek 1",
+          "location": "Creek A",
+          "material_moved_m3": "180",
+          "gold_grams": "105",
+          "avg_grade_g_per_m3": 0.583,
+          "gold_price_usd_per_g": "72",
+          "revenue_usd": 7560.0,
+          "diesel_liters": "420",
+          "diesel_cost_usd": "546",
+          "labour_cost_usd": "650",
+          "other_cost_usd": "280",
+          "total_cost_usd": 1476.0,
+          "profit_usd": 6084.0,
+          "notes": "Normal operating day"
+        },
+        {
+          "date": "2025-01-06",
+          "line_id": "L1",
+          "line_name": "River-Creek 1",
+          "location": "Creek A",
+          "material_moved_m3": "190",
+          "gold_grams": "98",
+          "avg_grade_g_per_m3": 0.516,
+          "gold_price_usd_per_g": "72",
+          "revenue_usd": 7056.0,
+          "diesel_liters": "430",
+          "diesel_cost_usd": "559",
+          "labour_cost_usd": "650",
+          "other_cost_usd": "260",
+          "total_cost_usd": 1469.0,
+          "profit_usd": 5587.0,
+          "notes": "Slightly lower grade section"
+        },
+        {
+          "date": "2025-01-07",
+          "line_id": "L1",
+          "line_name": "River-Creek 1",
+          "location": "Creek A",
+          "material_moved_m3": "200",
+          "gold_grams": "120",
+          "avg_grade_g_per_m3": 0.6,
+          "gold_price_usd_per_g": "72",
+          "revenue_usd": 8640.0,
+          "diesel_liters": "440",
+          "diesel_cost_usd": "572",
+          "labour_cost_usd": "650",
+          "other_cost_usd": "300",
+          "total_cost_usd": 1522.0,
+          "profit_usd": 7118.0,
+          "notes": "Strong pay streak"
+        }
+      ]
     },
     {
-      "date": "2025-02-05",
-      "grams": 280,
-      "price_per_gram": 67,
-      "gross": 18760,
-      "fee": 120,
-      "other_cost": 80,
-      "net": 18560,
-      "buyer": "Buyer B",
-      "note": "Paid cash"
+      "line_id": "L2",
+      "line_name": "Hillside 2",
+      "location": "Terrace B",
+      "records": [
+        {
+          "date": "2025-01-05",
+          "line_id": "L2",
+          "line_name": "Hillside 2",
+          "location": "Terrace B",
+          "material_moved_m3": "150",
+          "gold_grams": "70",
+          "avg_grade_g_per_m3": 0.467,
+          "gold_price_usd_per_g": "72",
+          "revenue_usd": 5040.0,
+          "diesel_liters": "360",
+          "diesel_cost_usd": "468",
+          "labour_cost_usd": "580",
+          "other_cost_usd": "220",
+          "total_cost_usd": 1268.0,
+          "profit_usd": 3772.0,
+          "notes": "Trial section on terrace"
+        },
+        {
+          "date": "2025-01-06",
+          "line_id": "L2",
+          "line_name": "Hillside 2",
+          "location": "Terrace B",
+          "material_moved_m3": "155",
+          "gold_grams": "74",
+          "avg_grade_g_per_m3": 0.477,
+          "gold_price_usd_per_g": "72",
+          "revenue_usd": 5328.0,
+          "diesel_liters": "365",
+          "diesel_cost_usd": "474.5",
+          "labour_cost_usd": "580",
+          "other_cost_usd": "230",
+          "total_cost_usd": 1284.5,
+          "profit_usd": 4043.5,
+          "notes": "Stable performance"
+        },
+        {
+          "date": "2025-01-07",
+          "line_id": "L2",
+          "line_name": "Hillside 2",
+          "location": "Terrace B",
+          "material_moved_m3": "160",
+          "gold_grams": "68",
+          "avg_grade_g_per_m3": 0.425,
+          "gold_price_usd_per_g": "72",
+          "revenue_usd": 4896.0,
+          "diesel_liters": "370",
+          "diesel_cost_usd": "481",
+          "labour_cost_usd": "580",
+          "other_cost_usd": "240",
+          "total_cost_usd": 1301.0,
+          "profit_usd": 3595.0,
+          "notes": "Slightly weaker gold zone"
+        }
+      ]
     }
   ]
 }
