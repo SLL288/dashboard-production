@@ -133,10 +133,10 @@
           "diesel_liters": "",
           "diesel_cost_usd": "",
           "labour_cost_usd": "",
-          "other_cost_usd": "",
-          "total_cost_usd": 0.0,
-          "profit_usd": 0.0,
-          "notes": "Slightly weaker gold zone"
+          "other_cost_usd": "500000",
+          "total_cost_usd": 500000.0,
+          "profit_usd": -500000.0,
+          "notes": "CAPEX"
         }
       ]
     }
