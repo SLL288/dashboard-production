@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gold ROI Dashboard – Line 1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, "Noto Sans", "PingFang SC", "Microsoft YaHei",
+        sans-serif;
+      background: radial-gradient(circle at top, #020617 0, #020617 45%, #020617 100%);
+      color: #e5e7eb;
+      line-height: 1.5;
+    }
+    a { color: #fbbf24; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header {
+      padding: 18px 16px 8px;
+      text-align: left;
+    }
+    header h1 {
+      margin: 0 0 4px;
+      font-size: 20px;
+    }
+    header p {
+      margin: 0;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto 40px;
+      padding: 0 14px 30px;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(15, 118, 110, 0.18);
+      color: #6ee7b7;
+      font-size: 10px;
+      margin-top: 6px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    @media (min-width: 720px) {
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.96);
+      border-radius: 16px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      padding: 14px 14px 12px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.65);
+    }
+
+    .card-title {
+      font-size: 13px;
+      color: #9ca3af;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+    .card-value {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .card-sub {
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    /* ROI progress bar */
+    .progress-shell {
+      width: 100%;
+      height: 9px;
+      background: #020617;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 6px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, #22c55e, #facc15, #f97316);
+      transition: width 0.8s ease-out;
+    }
+    .progress-label {
+      margin-top: 4px;
+      font-size: 11px;
+      color: #9ca3af;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Sales table */
+    .table-card {
+      margin-top: 14px;
+    }
+    .table-header {
+      font-size: 13px;
+      margin-bottom: 6px;
+      color: #9ca3af;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .table-wrapper {
+      max-height: 280px;
+      overflow: auto;
+      border-radius: 12px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.96);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+    th, td {
+      padding: 6px 7px;
+      text-align: right;
+      white-space: nowrap;
+    }
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: rgba(15, 23, 42, 0.98);
+      font-weight: 500;
+      color: #9ca3af;
+      border-bottom: 1px solid rgba(55, 65, 81, 0.9);
+    }
+    td {
+      border-bottom: 1px solid rgba(31, 41, 55, 0.9);
+    }
+    td:first-child, th:first-child {
+      text-align: left;
+      padding-left: 10px;
+    }
+
+    .badge-green {
+      color: #4ade80;
+      font-weight: 500;
+    }
+    .badge-yellow {
+      color: #facc15;
+      font-weight: 500;
+    }
+    .badge-red {
+      color: #fb7185;
+      font-weight: 500;
+    }
+
+    .top-cta {
+      margin-top: 10px;
+      display: flex;
+      justify-content: flex-start;
+    }
+    .top-cta a {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(248, 181, 0, 0.1);
+      font-size: 11px;
+      color: #facc15;
+      border: 1px solid rgba(250, 204, 21, 0.4);
+    }
+    .top-cta span.arrow {
+      margin-left: 6px;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 16px;
+      padding: 0 16px 24px;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Gold ROI Dashboard</h1>
+  <p>Placer line performance · Profit-based ROI</p>
+</header>
+
+<div class="container">
+
+  <div class="top-cta">
+    <!-- TODO: replace SHEET_URL with your real Google Sheet link -->
+    <a href="https://docs.google.com/" target="_blank" rel="noopener">
+      Add / Update gold sales in Google Sheets
+      <span class="arrow">↗</span>
+    </a>
+  </div>
+
+  <!-- KPI cards -->
+  <div class="grid" id="kpi-grid">
+    <!-- Filled by JS -->
+  </div>
+
+  <!-- Sales table -->
+  <div class="card table-card">
+    <div class="table-header">
+      <span>Recent gold sales</span>
+      <span id="sales-count" style="font-size:11px;color:#6b7280;">–</span>
+    </div>
+    <div class="table-wrapper">
+      <table id="sales-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>g</th>
+            <th>Price/g</th>
+            <th>Net</th>
+            <th>Buyer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Filled by JS -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>
+    ROI is calculated as <strong>Profit ÷ Initial Investment</strong>.  
+    Values are indicative only and depend on accurate input of gold sales and costs.
+  </footer>
+
+</div>
+
+<script>
+  async function loadData() {
+    try {
+      const res = await fetch("data.json?_=" + Date.now());
+      if (!res.ok) throw new Error("Failed to fetch data.json");
+      return await res.json();
+    } catch (e) {
+      console.error(e);
+      return null;
+    }
+  }
+
+  function formatCurrency(v, currency) {
+    if (v === null || v === undefined || isNaN(v)) return "-";
+    const sign = v < 0 ? "-" : "";
+    const abs = Math.abs(v);
+    return sign + (currency || "") + abs.toLocaleString(undefined, {
+      maximumFractionDigits: 0
+    });
+  }
+
+  function formatNumber(v, digits = 0) {
+    if (v === null || v === undefined || isNaN(v)) return "-";
+    return Number(v).toLocaleString(undefined, {
+      minimumFractionDigits: digits,
+      maximumFractionDigits: digits
+    });
+  }
+
+  function formatDate(dStr) {
+    if (!dStr) return "-";
+    const d = new Date(dStr);
+    if (isNaN(d.getTime())) return dStr;
+    return d.toISOString().slice(0, 10);
+  }
+
+  function renderKpis(data) {
+    const container = document.getElementById("kpi-grid");
+    container.innerHTML = "";
+
+    const cfg = data.config || {};
+    const sum = data.summary || {};
+    const currency = cfg.currency || "USD";
+
+    const investment = Number(cfg.investment || 0);
+    const totalNet = Number(sum.total_net || 0);
+    const profit = Number(sum.profit || (totalNet - investment));
+    const roi = Number(sum.roi_profit_based || (investment > 0 ? profit / investment : 0));
+
+    // Determine ROI label color
+    let roiClass = "badge-yellow";
+    if (roi >= 1.0) roiClass = "badge-green";
+    else if (roi < 0) roiClass = "badge-red";
+
+    // 1. Investment
+    container.innerHTML += `
+      <div class="card">
+        <div class="card-title">
+          <span>Initial investment</span>
+          <span class="pill">${cfg.project_name || "Line 1"}</span>
+        </div>
+        <div class="card-value">${formatCurrency(investment, currency + " ")}</div>
+        <div class="card-sub">
+          Starting capital deployed into this placer line.
+        </div>
+      </div>
+    `;
+
+    // 2. Total net + profit
+    container.innerHTML += `
+      <div class="card">
+        <div class="card-title">
+          <span>Total net revenue</span>
+          <span style="font-size:11px;color:#22c55e;">after fees &amp; costs</span>
+        </div>
+        <div class="card-value">${formatCurrency(totalNet, currency + " ")}</div>
+        <div class="card-sub">
+          Profit to date: <span class="${roiClass}">${formatCurrency(profit, currency + " ")}</span>
+        </div>
+      </div>
+    `;
+
+    // 3. ROI card
+    const roiPercent = roi * 100;
+    const capped = Math.max(-100, Math.min(roiPercent, 200)); // cap bar width
+    const width = ((capped + 100) / 300) * 100; // -100% → 0%, 0% → 33%, 200% → 100%
+
+    container.innerHTML += `
+      <div class="card">
+        <div class="card-title">
+          <span>Profit-based ROI</span>
+          <span style="font-size:11px;color:#9ca3af;">
+            Profit ÷ Investment
+          </span>
+        </div>
+        <div class="card-value ${roiClass}">
+          ${isNaN(roiPercent) ? "-" : roiPercent.toFixed(1) + "%"}
+        </div>
+        <div class="progress-shell">
+          <div class="progress-bar" id="roi-bar"></div>
+        </div>
+        <div class="progress-label">
+          <span>-100%</span>
+          <span>0%</span>
+          <span>+200%</span>
+        </div>
+      </div>
+    `;
+
+    // 4. Avg price / g & grams sold
+    const totalGrams = (data.sales || []).reduce((acc, s) => acc + Number(s.grams || 0), 0);
+    const totalGross = Number(sum.total_gross || 0);
+    const avgPrice = totalGrams > 0 ? totalGross / totalGrams : 0;
+
+    container.innerHTML += `
+      <div class="card">
+        <div class="card-title">
+          <span>Production summary</span>
+        </div>
+        <div class="card-value">
+          ${formatNumber(totalGrams, 0)} g
+        </div>
+        <div class="card-sub">
+          Average selling price: <span>${formatCurrency(avgPrice, currency + " ")}/g</span><br>
+          Sales window: <span>${formatDate(sum.first_sale_date)} → ${formatDate(sum.last_sale_date)}</span>
+        </div>
+      </div>
+    `;
+
+    // animate bar after DOM insert
+    requestAnimationFrame(() => {
+      const bar = document.getElementById("roi-bar");
+      if (bar) bar.style.width = width.toFixed(1) + "%";
+    });
+  }
+
+  function renderSalesTable(data) {
+    const tbody = document.querySelector("#sales-table tbody");
+    const countLabel = document.getElementById("sales-count");
+    tbody.innerHTML = "";
+
+    const currency = (data.config && data.config.currency) || "USD";
+    const sales = (data.sales || []).slice().sort((a, b) => {
+      return new Date(b.date) - new Date(a.date);
+    });
+
+    countLabel.textContent = sales.length
+      ? `${sales.length} recorded sale${sales.length > 1 ? "s" : ""}`
+      : "No sales recorded yet";
+
+    sales.forEach((s) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${formatDate(s.date)}</td>
+        <td>${formatNumber(s.grams || 0, 0)}</td>
+        <td>${formatCurrency(s.price_per_gram || 0, currency + " ")} </td>
+        <td>${formatCurrency(s.net || 0, currency + " ")} </td>
+        <td style="text-align:left;">${s.buyer || "-"}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  (async function init() {
+    const data = await loadData();
+    if (!data) return;
+    renderKpis(data);
+    renderSalesTable(data);
+  })();
+</script>
+</body>
+</html>
