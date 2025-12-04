@@ -119,6 +119,24 @@
           "total_cost_usd": 1301.0,
           "profit_usd": 5499.0,
           "notes": "Slightly weaker gold zone"
+        },
+        {
+          "date": "2025-01-07",
+          "line_id": "L2",
+          "line_name": "Hillside 2",
+          "location": "Terrace B",
+          "material_moved_m3": "",
+          "gold_grams": "",
+          "avg_grade_g_per_m3": 0.0,
+          "gold_price_usd_per_g": "",
+          "revenue_usd": 0.0,
+          "diesel_liters": "",
+          "diesel_cost_usd": "",
+          "labour_cost_usd": "",
+          "other_cost_usd": "",
+          "total_cost_usd": 0.0,
+          "profit_usd": 0.0,
+          "notes": "Slightly weaker gold zone"
         }
       ]
     }
