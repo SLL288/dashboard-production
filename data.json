@@ -1,0 +1,39 @@
+{
+  "config": {
+    "project_name": "Creek A – Line 1",
+    "currency": "USD",
+    "investment": 100000
+  },
+  "summary": {
+    "total_gross": 186000,
+    "total_net": 142000,
+    "profit": 42000,
+    "roi_profit_based": 0.42,
+    "first_sale_date": "2025-02-01",
+    "last_sale_date": "2025-05-18"
+  },
+  "sales": [
+    {
+      "date": "2025-02-01",
+      "grams": 320,
+      "price_per_gram": 66,
+      "gross": 21120,
+      "fee": 100,
+      "other_cost": 0,
+      "net": 21020,
+      "buyer": "Buyer A",
+      "note": ""
+    },
+    {
+      "date": "2025-02-05",
+      "grams": 280,
+      "price_per_gram": 67,
+      "gross": 18760,
+      "fee": 120,
+      "other_cost": 80,
+      "net": 18560,
+      "buyer": "Buyer B",
+      "note": "Paid cash"
+    }
+  ]
+}
