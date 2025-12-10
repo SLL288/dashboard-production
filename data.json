@@ -21,7 +21,10 @@
           "other_cost_usd": "280",
           "total_cost_usd": 1476.0,
           "profit_usd": 9024.0,
-          "notes": "Normal operating day"
+          "notes": "Normal operating day",
+          "": "",
+          "Revenue": "650",
+          "Date": "2025-01-05"
         },
         {
           "date": "2025-01-06",
@@ -39,7 +42,10 @@
           "other_cost_usd": "260",
           "total_cost_usd": 1469.0,
           "profit_usd": 8331.0,
-          "notes": "Slightly lower grade section"
+          "notes": "Slightly lower grade section",
+          "": "",
+          "Revenue": "650",
+          "Date": "2025-01-06"
         },
         {
           "date": "2025-01-07",
@@ -57,7 +63,10 @@
           "other_cost_usd": "300",
           "total_cost_usd": 1522.0,
           "profit_usd": 10478.0,
-          "notes": "Strong pay streak"
+          "notes": "Strong pay streak",
+          "": "",
+          "Revenue": "650",
+          "Date": "2025-01-07"
         }
       ]
     },
@@ -82,7 +91,10 @@
           "other_cost_usd": "220",
           "total_cost_usd": 1268.0,
           "profit_usd": 5732.0,
-          "notes": "Trial section on terrace"
+          "notes": "Trial section on terrace",
+          "": "",
+          "Revenue": "580",
+          "Date": "2025-01-05"
         },
         {
           "date": "2025-01-06",
@@ -100,7 +112,10 @@
           "other_cost_usd": "230",
           "total_cost_usd": 1284.5,
           "profit_usd": 6115.5,
-          "notes": "Stable performance"
+          "notes": "Stable performance",
+          "": "",
+          "Revenue": "580",
+          "Date": "2025-01-06"
         },
         {
           "date": "2025-01-07",
@@ -118,7 +133,10 @@
           "other_cost_usd": "240",
           "total_cost_usd": 1301.0,
           "profit_usd": 5499.0,
-          "notes": "Slightly weaker gold zone"
+          "notes": "Slightly weaker gold zone",
+          "": "",
+          "Revenue": "580",
+          "Date": "2025-01-07"
         },
         {
           "date": "2025-01-07",
@@ -136,7 +154,10 @@
           "other_cost_usd": "500000",
           "total_cost_usd": 500000.0,
           "profit_usd": -500000.0,
-          "notes": "CAPEX"
+          "notes": "CAPEX",
+          "": "",
+          "Revenue": "",
+          "Date": "2025-01-07"
         }
       ]
     }
